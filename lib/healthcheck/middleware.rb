@@ -6,7 +6,9 @@ module Healthcheck
 
     def call(env)
       if env['PATH_INFO'] == '/healthcheck'
-        [ 200, { 'Content-Type' => 'application/json' }, [ body.to_json ] ]
+        Rails.logger.silence do
+          [ 200, { 'Content-Type' => 'application/json' }, [ body.to_json ] ]
+        end
       else
         @app.call env
       end
